@@ -1,7 +1,7 @@
 <template>
   <a-form-item label="近5年因违法被拘留">
     <a-input-number
-      min="0"
+      :min="0"
       v-model:value="data.lawPunishMentTimes"
       @change="emitEvent"
     ></a-input-number

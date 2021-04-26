@@ -65,78 +65,78 @@ const columns = [
     key: "action",
     slots: { customRender: "action" },
   },
-];
+]
 
-import DataUtils from "@/data/DataUtils.ts";
-import Rules from "@/core/Rules.ts";
-import IDataEmployment from "@/type/IDataEmployment.ts";
+import DataUtils from "@/data/DataUtils.ts"
+import Rules from "@/core/Rules.ts"
+import IDataEmployment from "@/type/IDataEmployment.ts"
 import {
   LiveType,
   CityType,
   DegreeType,
   LevelType,
   DistrictType,
-} from "@/type/ITypes";
-import moment from "moment";
-import { defineComponent, inject } from "vue";
+} from "@/type/ITypes"
+import moment from "moment"
+import { defineComponent, inject } from "vue"
 export default defineComponent({
   name: "ExamEmployment",
   setup(props, content) {
     const DatePickerLocale_zh_CN=inject('DatePickerLocale_zh_CN')
-    const dateFormat = DataUtils.MonthFormat;
+    const dateFormat = DataUtils.MonthFormat
     // 保险类型数据
-    const selectorData = DataUtils.getOptionsFromEnum(DistrictType);
-    const data = inject<Array<IDataEmployment>>("employmentData");
+    const selectorData = DataUtils.getOptionsFromEnum(DistrictType)
+    const data = inject<Array<IDataEmployment>>("employmentData")
 
     // events
     const changeData = (index: number, prop: string, value: string) => {
       if (data && data.length > index) {
-        DataUtils.changeEmploymentData(data, index, prop, value);
-        emitEvent();
+        DataUtils.changeEmploymentData(data, index, prop, value)
+        emitEvent()
       }
-    };
+    }
     const delItem = function (index: number) {
-      //console.log(index);
+      //console.log(index)
       if (data && data.length > index) {
-        data.splice(index, 1);
-        emitEvent();
+        data.splice(index, 1)
+        emitEvent()
       }
-    };
+    }
     const addItem = () => {
       if (data) {
-        let len = data.length;
+        let len = data.length
         data.push({
           key: len,
           startMonth: moment().format(dateFormat),
           endMonth: moment().format(dateFormat),
           itype: DistrictType.In,
-        });
-        emitEvent();
+        })
+        emitEvent()
       }
-    };
+    }
     const changeType = (event: any, index: number) => {
-      let val = event.target.value as string;
-      changeData(index, "itype", val);
-    };
+      let val = event.target.value as string
+      changeData(index, "itype", val)
+    }
 
     const changeStartMonth = (date: moment.Moment, index: number) => {
-      let val = date.format(dateFormat);
-      changeData(index, "startMonth", val);
-    };
+      let val = date.format(dateFormat)
+      changeData(index, "startMonth", val)
+    }
     const changeEndMonth = (date: moment.Moment, index: number) => {
-      let val = date.format(dateFormat);
-      changeData(index, "endMonth", val);
-    };
+      let val = date.format(dateFormat)
+      changeData(index, "endMonth", val)
+    }
     const emitEvent = () => {
-      content.emit("change-data", 0);
-    };
+      content.emit("change-data", 0)
+    }
     const disabledDate = (current: moment.Moment) => {
       return (
         current &&
         (current < Rules.Insurance_Start_Date ||
           current.endOf("month") > Rules.Last_Year_End_Date)
-      );
-    };
+      )
+    }
     return {
       DatePickerLocale_zh_CN,
       columns,
@@ -151,9 +151,9 @@ export default defineComponent({
       changeEndMonth,
       moment,
       disabledDate,
-    };
+    }
   },
-});
+})
 </script>
 <style scoped>
 .footer {

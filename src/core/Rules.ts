@@ -687,10 +687,6 @@ export default class Rules {
     //
     let minBirthDay = moment(baseDay).subtract(age, "y");
     let newBirthDay = moment(birthDay);
-    console.log(newBirthDay.format("YYYY-MM-DD"));
-    console.log(minBirthDay.format("YYYY-MM-DD"));
-    console.log(newBirthDay.isBefore(minBirthDay));
-    console.log("00000000000000000000000000000");
     return newBirthDay.isBefore(minBirthDay);
     // return false
   }
@@ -756,7 +752,7 @@ export default class Rules {
             }
             if (flag == "2") {
               nDetail.su_score += Rules.Suburb_Award_Both * i;
-            } else if (flag == "3") {
+            } else if (flag == "3") { 
               nDetail.su_score += Rules.Suburb_Award_Live * i;
             }
             if (nDetail.su_score > Rules.Suburb_Award_Max) {
@@ -775,8 +771,6 @@ export default class Rules {
             nDetail.li_score +
             nDetail.em_score;
           nDetail.tot_score = Number(total.toFixed(2));
-          console.log(years[i], nDetail.tot_score);
-
           scores.push(nDetail.tot_score);
         }
       }

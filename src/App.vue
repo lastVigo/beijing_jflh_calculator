@@ -1,7 +1,7 @@
 <template>
-<a-config-provider locale="zhCN">
+<!-- <a-config-provider locale="zhCN"> -->
   <router-view></router-view>
-</a-config-provider>
+<!-- </a-config-provider> -->
 </template>
 <script lang="ts">
 import { defineComponent,provide} from 'vue'

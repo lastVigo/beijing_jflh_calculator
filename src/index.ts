@@ -41,3 +41,4 @@ app.use(Checkbox)
 app.use(InputNumber)
 
 app.mount('#app')
+console.log("以production发布项目，echarts部分会有bug，暂未解决。");

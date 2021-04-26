@@ -2,8 +2,8 @@
   <a-form>
     <a-form-item label="双创积分">
       <a-input-number
-        max="12"
-        min="0"
+        :max="12"
+        :min="0"
         v-model:value="data.innovateScore"
         @change="emitEvent"
       ></a-input-number>

@@ -26,7 +26,7 @@
     <a-form-item label="取得时间">
       <a-date-picker
         :locale="DatePickerLocale_zh_CN"
-        :value="moment(data.time, dateFormat)"
+        :value="moment(data.time, dateForamt)"
         @change="changeTime($event)"
       />
     </a-form-item>
@@ -82,6 +82,7 @@ export default defineComponent({
       DatePickerLocale_zh_CN,
       data,
       dateForamt,
+      
       cityTypes,
       degreeTypes,
       levelTypes,

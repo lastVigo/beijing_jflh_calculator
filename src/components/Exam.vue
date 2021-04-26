@@ -28,9 +28,9 @@
       width="1000px"
       cancel-text=""
       ok-text="关闭"
-      closable="false"
-      mask="true"
-      maskClosable="false"
+      :closable="true"
+      :mask="true"
+      :maskClosable="true"
       @ok="afterCloseHandler"
       @afterClose="afterCloseHandler"
     >
@@ -49,7 +49,7 @@
     :width="900"
     :closable="false"
     v-model:visible="isShowSorceDetail"
-    destroyOnClose="true"
+    :destroyOnClose="true"
   >
     <ScoreDetail />
   </a-drawer>
@@ -59,7 +59,7 @@
     :width="900"
     :closable="false"
     v-model:visible="isShowcharts"
-    destroyOnClose="true"
+    :destroyOnClose="true"
   >
     <Charts :gender="inputedGender" :birthday="inputedBirthDay" />
   </a-drawer>
@@ -109,16 +109,6 @@ import { $enum } from "ts-enum-util"
 
 export default defineComponent({
   name: "Exam",
-  props: {
-    birthday: {
-      type: String,
-      required: true,
-    },
-    gender: {
-      type: String,
-      required: true,
-    },
-  },
   components: {
     ExamEmployment,
     ExamLive,
@@ -137,7 +127,7 @@ export default defineComponent({
     const points: Points = new Points()
     const router = useRouter()
     const route = useRoute()
-    // //console.log(router,route)
+    
     const data = reactive(Object.assign([], d_ExamItems))
     const inputedBirthDay = route.params.birthday
     const inputedGender = route.params.gender
@@ -187,7 +177,7 @@ export default defineComponent({
     const currentFormComName = computed(() => {
       let str = ""
       if (editIndex.value === -1) {
-        return str
+        return 'ExamEmployment'
       } else {
         switch (editIndex.value) {
           case 0:
@@ -278,9 +268,9 @@ export default defineComponent({
       changeIndex = -1
     }
     const afterCloseHandler = function () {
-      //console.log("editOk")
+      
       isShowForm.value = false
-      // //console.log(otherData.lawPunishMentTimes)
+      
       if (changeIndex != -1) {
         changeDataHandler(changeIndex)
       }

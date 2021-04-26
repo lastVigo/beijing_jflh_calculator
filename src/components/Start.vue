@@ -11,7 +11,7 @@
             :format="dateFormat"
             :disabledDate="disabledDateBefore"
             v-model:value="computeTime"
-            disabled="true"
+            :disabled="true"
           />
         </a-form-item>
         <a-form-item label="居住证">
@@ -47,11 +47,11 @@
           />
         </a-form-item>
       </a-form>
-      <a-row justify="center" class="btns">
+      <div class="btns">
         <a-button type="primary" @click="goNext" :disabled="btnDisable"
           >继续</a-button
         >
-      </a-row>
+      </div>
     </a-card>
   </div>
 </template>

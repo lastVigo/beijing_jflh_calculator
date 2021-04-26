@@ -5,7 +5,7 @@
         :locale="DatePickerLocale_zh_CN"
         :value="moment(data.birthDay, dateFormat)"
         @change="changeBirthday($event)"
-        disabled="true"
+        :disabled="true"
       />
     </a-form-item>
   </a-form>

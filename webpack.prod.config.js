@@ -5,10 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-// const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require('webpack');
 module.exports = merge(base, {
-  mode: "production",
+  mode: "production",// 这个模式下，echarts会有bug
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name]-[contenthash:6].js",
@@ -27,6 +26,10 @@ module.exports = merge(base, {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
           reuseExistingChunk: true,
+        },
+        echarts: {
+          name: "chunk-echarts",
+          test: path.resolve("node_modules","echarts"),
         },
         myself: {
           name: "chunk-myself",
@@ -57,9 +60,6 @@ module.exports = merge(base, {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
-      // {
-      //   loader: "postcss-loader",
-      // },
     ],
   },
 });

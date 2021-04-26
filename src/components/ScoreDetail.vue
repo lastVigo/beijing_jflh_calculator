@@ -5,7 +5,7 @@
     :defaultExpandedRowKeys="[-1]"
     :columns="columns"
     :data-source="data"
-    :row-selection="rowSelection"
+    
   >
   </a-table>
 </template>

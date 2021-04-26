@@ -38,18 +38,20 @@ import { LiveType } from "@/type/ITypes.ts";
 import Rules from "@/core/Rules.ts";
 import { scort_levels } from "@/data/config.ts";
 import * as echarts from 'echarts/core';
+/** 
+ * */
 import {
     BarChart,
     // 系列类型的定义后缀都为 SeriesOption
     // BarSeriesOption,
-    
-  
+
 } from 'echarts/charts'
 import {
     TitleComponent,
     TooltipComponent,
     MarkLineComponent,
     GridComponent,
+    LegendComponent,
 } from 'echarts/components'
 import {
     CanvasRenderer
@@ -57,12 +59,9 @@ import {
 
 // 注册必须的组件
 echarts.use(
-    [TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer,MarkLineComponent]
+    [TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer,MarkLineComponent,LegendComponent]
 )
 
-// var option: ECOption = {
-//     ...
-// }
 export default defineComponent({
   name: "Charts",
   props: {
@@ -132,14 +131,6 @@ export default defineComponent({
                   symbol: "none",
                 },
               },
-              // {
-              //      name:'2018年落户最低分值',
-              //     xAxis:'2022',
-              //     itemStyle:{
-              //         color:'blue',
-
-              //     }
-              // }
             ],
           },
         },
@@ -148,8 +139,6 @@ export default defineComponent({
 
     return {
       realData,
-      // years,
-      // scores,
       conditions: [
         { label: "自有住房-城六区", value: "1" },
         { label: "自有住房-城六区外", value: "3" },
@@ -163,12 +152,6 @@ export default defineComponent({
       DatePickerLocale_zh_CN
     }
   },
-  data: function () {
-    let myChart: echarts.ECharts = null
-    return {
-      myChart,
-    }
-  },
   methods: {
     /**
      * 1:自有住房-城六区 住房+1
@@ -180,7 +163,7 @@ export default defineComponent({
       flag: string,
       yearNum: number,
       childBirthday: string
-    ): void {
+    ): any {
       let rst: [string[], number[], string] = Rules.getFutureScores(
         yearNum,
         this.realData.detail,
@@ -224,22 +207,24 @@ export default defineComponent({
         }
         oData.push(markLineData)
       }
-
       newOption.xAxis.data = years
       newOption.series[0].data = scoresItems
       newOption.series[0].markLine.data = oData
-      if (this.myChart) {
-        this.myChart.setOption(newOption, true)
-      }
+      return newOption
     },
     conditionChange: function () {
-      this.countFuture(this.curCondtion, this.yearNum, this.childBirthday)
+      let option= this.countFuture(this.curCondtion, this.yearNum, this.childBirthday)
+      let chartDiv = document.getElementById("cc")
+      let chart=echarts.getInstanceByDom(chartDiv)
+      if(!chart){
+          chart=echarts.init(chartDiv)
+      }else{
+         chart.clear();
+      }
+      chart.setOption(option, {notMerge:true})
     },
   },
   mounted: function () {
-    let cc = document.getElementById("cc")
-    let myChart = echarts.init(cc)
-    this.myChart = myChart
     this.conditionChange()
   },
 })
